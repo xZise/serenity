@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <LibAudio/Sample.h>
 #include <LibGUI/Frame.h>
 
 class TrackManager;
@@ -22,7 +23,8 @@ private:
 
     virtual void paint_event(GUI::PaintEvent&) override;
 
-    int sample_to_y(int sample) const;
+    static Audio::Sample getMax(FixedArray<Audio::Sample> const& buffer);
+    int sample_to_y(float sample, float sample_max) const;
 
     TrackManager& m_track_manager;
 };

@@ -7,15 +7,24 @@
 
 #include "./Interpreter.h"
 #include "./AST.h"
+#include "AK/Format.h"
+#include "Tokenizer.h"
 #include <AK/RefPtr.h>
 
 namespace F2 {
 
-ErrorOr<void> Interpreter::run(String const& source)
+ErrorOr<void> Interpreter::run(String const&)
 {
-    auto node = make_ref_counted<AssignmentOp>(0, 0, source,
-        make_ref_counted<Val>(0, 0, source, TRY(String::from_utf8("a"sv))),
-        make_ref_counted<StringLiteral>(0, 0, source, TRY(String::from_utf8("b"sv))));
+    auto source2 = TRY(String::from_utf8("hello = 12345 == 65432"sv));
+
+    Tokenizer t(source2);
+    auto tokens = t.parse();
+
+    dbgln(":-) {}", tokens.size());
+
+    for (auto token : tokens) {
+        dbgln("{} / {}", static_cast<u8>(token.type()), token.value());
+    }
 
     return {};
 }

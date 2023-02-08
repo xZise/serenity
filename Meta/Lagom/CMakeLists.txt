@@ -338,6 +338,9 @@ target_sources(LibCore PRIVATE ${AK_SOURCES})
 # LibMain
 add_serenity_subdirectory(Userland/Libraries/LibMain)
 
+# LibBasic
+add_serenity_subdirectory(Userland/Libraries/LibBASIC)
+
 # LibTimeZone
 # This is needed even if Lagom is not enabled because it is depended upon by code generators.
 add_serenity_subdirectory(Userland/Libraries/LibTimeZone)
@@ -568,6 +571,7 @@ if (BUILD_LAGOM)
         set(TEST_DIRECTORIES
             AK
             LibAudio
+            LibBASIC
             LibCrypto
             LibCompress
             LibGL

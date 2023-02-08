@@ -158,18 +158,25 @@ enum class TokenCategory {
 
 class Token {
 public:
-    Token(TokenType type, StringView value)
+    Token(TokenType type, StringView value, size_t line, size_t column)
         : m_type(type)
         , m_value(value)
+        , m_line(line)
+        , m_column(column)
     {
     }
 
     TokenType type() const { return m_type; }
     StringView value() const { return m_value; }
 
+    size_t line() const { return m_line; }
+    size_t column() const { return m_column; }
+
 private:
     TokenType m_type;
     StringView m_value;
+    size_t m_line;
+    size_t m_column;
 };
 
 };

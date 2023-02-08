@@ -29,6 +29,8 @@ Vector<Token> Tokenizer::tokenize()
     Vector<Token> tokens;
 
     size_t last_position = 0;
+    size_t line = 1;
+    size_t line_start = 0;
 
     while (!is_eof()) {
         while (!is_eof() && current_char() != '\n' && AK::is_ascii_blank(current_char())) {
@@ -110,8 +112,14 @@ Vector<Token> Tokenizer::tokenize()
                 token_type = TokenType::Invalid;
             }
         }
-        Token numberToken(token_type, m_source.substring_view(last_position, m_position - last_position));
+
+        Token numberToken(token_type, m_source.substring_view(last_position, m_position - last_position), line, last_position - line_start + 1);
         tokens.append(numberToken);
+
+        if (token_type == TokenType::Newline) {
+            line++;
+            line_start = m_position;
+        }
     }
     return tokens;
 }
